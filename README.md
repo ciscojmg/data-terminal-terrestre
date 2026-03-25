@@ -21,6 +21,7 @@ Por cada cooperativa (una fila por URL de horarios):
 | ✉️ `email` | Correo |
 | 🔗 `source_url` | Página origen en terminal-guayaquil.com |
 | 🕐 `scraped_at` | Fecha ISO del scrape |
+| 🖼️ `imagen_cooperativa` | URL del logo (tras `enrich-images`; ver [listado de cooperativas](https://www.terminal-guayaquil.com/listado-cooperativas-terminal-guayaquil.php)) |
 
 No se almacenan listas de horas sueltas; el foco es metadatos de ruta y contacto.
 
@@ -65,6 +66,7 @@ node scripts/terminal-scrape.js <comando> [opciones]
 | `full` o `scrape` | 🔍 | Barrido completo: listados regionales → ciudades → páginas de cooperativas. Escribe `data/horarios.ndjson`. Por defecto usa **HTTP** (sin navegador). |
 | `refresh` | 🔄 | Vuelve a descargar cada **URL única** del NDJSON actual y reescribe el archivo con el mismo esquema. |
 | `repair` | 🛠️ | Corrige filas con cooperativa `"Desconocida"` leyendo el `h1` de la página. |
+| `enrich-images` | 🖼️ | Añade `imagen_cooperativa` emparejando con el [listado oficial](https://www.terminal-guayaquil.com/listado-cooperativas-terminal-guayaquil.php). |
 | `to-json` | 📄 | Genera `data/horarios.json` a partir del NDJSON. |
 
 ### Opciones (`full` / `scrape`)
@@ -93,6 +95,9 @@ npm run terminal -- refresh
 
 # Reparar nombres
 npm run terminal -- repair
+
+# Logos desde listado oficial de cooperativas
+npm run terminal -- enrich-images
 
 # Exportar JSON bonito
 npm run terminal -- to-json
@@ -123,6 +128,7 @@ Puedes seguir llamando los módulos directamente:
 | `npm run scrape:http` | Scrape forzando HTTP. |
 | `npm run refresh:data` | Solo refresh. |
 | `npm run repair:desconocidas` | Solo repair. |
+| `npm run enrich:imagenes` | Solo enriquecimiento de URLs de logo. |
 | `npm run ndjson-to-json` | Solo conversión a JSON. |
 
 ---
@@ -137,6 +143,8 @@ Puedes seguir llamando los módulos directamente:
 │   ├── scrape.js            # Barrido completo
 │   ├── refresh-from-web.js  # Regenerar desde URLs
 │   ├── repair-desconocidas.js
+│   ├── enrich-imagenes.js   # Logos desde listado cooperativas
+│   ├── cooperativas-listado.js
 │   ├── parser.js            # Cheerio: h1, rutas, contactos, web
 │   ├── http-fetch.js        # GET + redirecciones
 │   └── config.js
