@@ -12,7 +12,8 @@
     "scrape:http": "SCRAPE_USE_HTTP=1 node src/scrape.js",
     "repair:desconocidas": "node src/repair-desconocidas.js",
     "refresh:data": "node src/refresh-from-web.js",
-    "ndjson-to-json": "node scripts/ndjson-to-json.js"
+    "ndjson-to-json": "node scripts/ndjson-to-json.js",
+    "enrich:imagenes": "node src/enrich-imagenes.js"
   },
   "dependencies": {
     "cheerio": "1.0.0-rc.12",

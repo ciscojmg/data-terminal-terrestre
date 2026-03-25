@@ -29,6 +29,8 @@ function uncachePipeline() {
     "../src/scrape.js",
     "../src/refresh-from-web.js",
     "../src/repair-desconocidas.js",
+    "../src/enrich-imagenes.js",
+    "../src/cooperativas-listado.js",
     "../src/config.js",
     "../src/parser.js",
     "../src/http-fetch.js",
@@ -69,6 +71,8 @@ Comandos:
   refresh        Vuelve a descargar cada URL única del NDJSON y reescribe el archivo
                  (mismo esquema: ruta, contactos, web, 1 registro por cooperativa).
   repair         Corrige filas con cooperativa "Desconocida" leyendo el h1.
+  enrich-images  Descarga el listado de cooperativas del terminal y añade
+                 imagen_cooperativa a cada fila (emparejamiento por nombre).
   to-json        Genera data/horarios.json desde data/horarios.ndjson
 
 Opciones (full / scrape):
@@ -85,6 +89,7 @@ Ejemplos:
   node scripts/terminal-scrape.js full --browser
   node scripts/terminal-scrape.js refresh
   node scripts/terminal-scrape.js repair
+  node scripts/terminal-scrape.js enrich-images
   node scripts/terminal-scrape.js to-json
 `);
 }
@@ -125,6 +130,11 @@ async function run() {
     }
     case "repair": {
       const { main } = require("../src/repair-desconocidas");
+      await main();
+      break;
+    }
+    case "enrich-images": {
+      const { main } = require("../src/enrich-imagenes");
       await main();
       break;
     }
